@@ -1,2 +1,4 @@
-package com.sql.jdbc;public class Main {
+package com.sql.jdbc;
+
+public class Main {
 }
