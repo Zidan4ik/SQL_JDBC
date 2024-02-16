@@ -19,6 +19,7 @@ public class UserDetailsService extends ConnectDB implements UserDetailsDAO {
 
     @Override
     public void add(UserDetail userDetail) {
+        logMessage("Детальна інформація користувача id:"+userDetail.getId()+" було добавлено в база даних");
         PreparedStatement preparedStatement = null;
 
         String queryUserDetails = "INSERT INTO user_details(id,age,phone,job) VALUES(?,?,?,?)";
@@ -38,19 +39,20 @@ public class UserDetailsService extends ConnectDB implements UserDetailsDAO {
             preparedStatement.setInt(2, userDetail.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logMessage(e.getMessage());
         } finally {
             try {
                 if (!preparedStatement.isClosed())
                     preparedStatement.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logMessage(e.getMessage());
             }
         }
     }
 
     @Override
     public List<UserDetail> getAll() {
+        logMessage("Отримано детальну інформацію всіх користувачів з бази даних");
         Statement statement = null;
         String query = "SELECT * FROM user_details";
         List<UserDetail> usersDetails = new ArrayList<>();
@@ -68,56 +70,54 @@ public class UserDetailsService extends ConnectDB implements UserDetailsDAO {
                 usersDetails.add(userDetail);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logMessage(e.getMessage());
         } finally {
             try {
                 if (!statement.isClosed())
                     statement.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logMessage(e.getMessage());
             }
         }
-
-        for (UserDetail u : usersDetails) {
-            System.out.println(u);
-        }
+        showList(usersDetails);
         return usersDetails;
     }
 
     @Override
     public UserDetail getById(int id) {
+        logMessage("Отримано інформацію про користувача з бази даних id:"+id);
         PreparedStatement preparedStatement = null;
 
         String query = "SELECT * FROM user_details WHERE id=?";
-        UserDetail userDetail = new UserDetail();
-
+        UserDetail userDetail = null;
         try {
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, id);
 
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
+                userDetail = new UserDetail();
                 userDetail.setId(resultSet.getInt("id"));
                 userDetail.setAge(resultSet.getInt("age"));
                 userDetail.setPhone(resultSet.getString("phone"));
                 userDetail.setJob(resultSet.getString("job"));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logMessage(e.getMessage());
         } finally {
             try {
                 if (!preparedStatement.isClosed())
                     preparedStatement.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logMessage(e.getMessage());
             }
         }
         return userDetail;
-
     }
 
     @Override
     public void update(UserDetail userDetail, int id) {
+        logMessage("Оновлено дані про детальну інформацію користувача в базі даних id:"+id);
         PreparedStatement preparedStatement = null;
 
         String query = "UPDATE user_details SET age=?,phone=?,job=? WHERE id=?";
@@ -133,19 +133,20 @@ public class UserDetailsService extends ConnectDB implements UserDetailsDAO {
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logMessage(e.getMessage());
         } finally {
             try {
                 if (!preparedStatement.isClosed())
                     preparedStatement.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logMessage(e.getMessage());
             }
         }
     }
 
     @Override
     public void delete(int id) {
+        logMessage("Видалено детальну інформацію про користувача з бази даних id:"+id);
         PreparedStatement preparedStatement = null;
 
         String queryDeleteValues = "DELETE FROM user_details WHERE id=?";
@@ -164,13 +165,13 @@ public class UserDetailsService extends ConnectDB implements UserDetailsDAO {
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logMessage(e.getMessage());
         } finally {
             try {
                 if (!preparedStatement.isClosed())
                     preparedStatement.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logMessage(e.getMessage());
             }
         }
     }

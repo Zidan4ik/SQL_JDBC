@@ -1,6 +1,7 @@
-package com.sql.jdbc.service;
+package com.sql.jdbc.service.test;
 
 import com.sql.jdbc.entity.UserDetail;
+import com.sql.jdbc.service.UserDetailsService;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,14 +9,14 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 
-class UserDetailsServiceTest {
+public class UserDetailsServiceTest {
     private UserDetailsService userDetailsService;
     @BeforeEach
     public void createService(){
         userDetailsService = new UserDetailsService();
     }
     @Test
-    void add() {
+    public void add() {
         UserDetail detail = new UserDetail(50,37,"0982233440","Doctor");
         userDetailsService.add(detail);
 
@@ -30,7 +31,7 @@ class UserDetailsServiceTest {
     }
 
     @Test
-    void getAll() {
+    public void getAll() {
         List<UserDetail> details = userDetailsService.getAll();
 
         Assert.assertNotNull(details);
@@ -38,7 +39,7 @@ class UserDetailsServiceTest {
     }
 
     @Test
-    void getById() {
+    public void getById() {
         UserDetail detail = userDetailsService.getById(37);
         Assert.assertNotNull(detail);
         Assert.assertEquals(detail.getId(),37);
@@ -46,7 +47,7 @@ class UserDetailsServiceTest {
     }
 
     @Test
-    void update() {
+    public void update() {
         UserDetail userDetail = new UserDetail(20,"0982370111","cleaner");
 
         userDetailsService.update(userDetail,37);
@@ -59,7 +60,7 @@ class UserDetailsServiceTest {
     }
 
     @Test
-    void delete() {
+    public void delete() {
         int id = 39;
         UserDetail userDetail = userDetailsService.getById(id);
 

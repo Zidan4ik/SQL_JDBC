@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderService extends ConnectDB implements OrderDAO {
-    ShoppingCartService shoppingCartService = new ShoppingCartService();
+    private ShoppingCartService shoppingCartService = new ShoppingCartService();
 
     public OrderService() {
         super();
@@ -20,6 +20,7 @@ public class OrderService extends ConnectDB implements OrderDAO {
 
     @Override
     public void add(int userId) {
+        logMessage("Користувач купив продукти з корзини id:"+userId);
         PreparedStatement preparedStatement = null;
 
         String querySaveOrders = "INSERT INTO orders(user_id,list,total_summa) " +
@@ -36,22 +37,22 @@ public class OrderService extends ConnectDB implements OrderDAO {
             preparedStatement.executeUpdate();
 
             shoppingCartService.deleteAllProductsByUser(userId);
-
         } catch (SQLException e) {
-            e.printStackTrace();
+            logMessage(e.getMessage());
         } finally {
             try {
                 if(preparedStatement!=null){
                     preparedStatement.close();
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                logMessage(e.getMessage());
             }
         }
     }
 
     @Override
     public List<Order> getAllById(int userId) {
+        logMessage("Отримано список всіх замовлень користувача id:"+userId);
         PreparedStatement preparedStatement = null;
 
         String query = "SELECT * FROM orders WHERE user_id=?";
@@ -71,13 +72,13 @@ public class OrderService extends ConnectDB implements OrderDAO {
                 orders.add(order);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logMessage(e.getMessage());
         } finally {
             try {
                 if (!preparedStatement.isClosed())
                     preparedStatement.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logMessage(e.getMessage());
             }
         }
         for (Order order: orders){
@@ -88,6 +89,7 @@ public class OrderService extends ConnectDB implements OrderDAO {
 
     @Override
     public List<Order> getAll() {
+        logMessage("Отримано список всіх замовлень з бази даних");
         Statement statement = null;
 
         String query = "SELECT * FROM orders";
@@ -105,18 +107,16 @@ public class OrderService extends ConnectDB implements OrderDAO {
                 orders.add(order);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logMessage(e.getMessage());
         } finally {
             try {
                 if (!statement.isClosed())
                     statement.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logMessage(e.getMessage());
             }
         }
-        for (Order order: orders){
-            System.out.println(order);
-        }
+       showList(orders);
         return orders;
     }
 }

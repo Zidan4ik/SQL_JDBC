@@ -1,0 +1,28 @@
+16-02-2024 17:28:01 [main] INFO  com.sql.jdbc.service.UserService - Duplicate entry '40' for key 'users.PRIMARY'
+16-02-2024 17:29:29 [main] INFO  com.sql.jdbc.service.UserService - Користувач з id:27 був добавленний в таблицю
+16-02-2024 17:29:47 [main] INFO  com.sql.jdbc.service.UserService - Duplicate entry '27' for key 'users.PRIMARY'
+16-02-2024 18:17:59 [main] INFO  com.sql.jdbc.service.UserService - Користувач з id:41 був добавлений в базу даних
+16-02-2024 18:17:59 [main] INFO  com.sql.jdbc.service.UserService - Отримано всіх користувачів з бази даних
+16-02-2024 18:17:59 [main] INFO  com.sql.jdbc.service.UserService - Отримано користувача з бази даних id:41
+16-02-2024 18:17:59 [main] INFO  com.sql.jdbc.service.UserService - Оновлено дані про користувача в базі даних id:41
+16-02-2024 18:17:59 [main] INFO  com.sql.jdbc.service.UserService - Видалено користувача з бази даних id:40
+16-02-2024 18:20:11 [main] INFO  com.sql.jdbc.service.UserDetailsService - Детальна інформація користувача id:41 було добавлено в база даних
+16-02-2024 18:20:26 [main] INFO  com.sql.jdbc.service.UserDetailsService - Отримано детальну інформацію всіх користувачів з бази даних
+16-02-2024 18:20:41 [main] INFO  com.sql.jdbc.service.UserDetailsService - Отримано інформацію про користувача з бази даних id:22
+16-02-2024 18:21:08 [main] INFO  com.sql.jdbc.service.UserDetailsService - Оновлено дані про детальну інформацію користувача в базі даних id:41
+16-02-2024 18:21:21 [main] INFO  com.sql.jdbc.service.UserDetailsService - Отримано інформацію про користувача з бази даних id:2
+16-02-2024 18:21:35 [main] INFO  com.sql.jdbc.service.UserDetailsService - Видалено детальну інформацію про користувача з бази даних id:22
+16-02-2024 18:21:47 [main] INFO  com.sql.jdbc.service.UserDetailsService - Видалено детальну інформацію про користувача з бази даних id:20
+16-02-2024 18:23:01 [main] INFO  com.sql.jdbc.service.ProductService - Продукт з id:0 було добавлено в список купного
+16-02-2024 18:23:11 [main] INFO  com.sql.jdbc.service.ProductService - Отримано список продуктів з база даних
+16-02-2024 18:23:22 [main] INFO  com.sql.jdbc.service.ProductService - Отримано продукт по id:13
+16-02-2024 18:23:32 [main] INFO  com.sql.jdbc.service.ProductService - Змінено дані про продукт під id:13
+16-02-2024 18:23:32 [main] INFO  com.sql.jdbc.service.ProductService - Видалено продукт під id:13
+16-02-2024 18:24:09 [main] INFO  com.sql.jdbc.service.ShoppingCartService - Продукт id:1 був добавленний в кошик користувача id:1
+16-02-2024 18:24:09 [main] INFO  com.sql.jdbc.service.ShoppingCartService - Видалено продукт під id:1 в корзині користувача id:1
+16-02-2024 18:24:09 [main] INFO  com.sql.jdbc.service.ShoppingCartService - Отримано всі продукти з кошику користувача id:1
+16-02-2024 18:24:09 [main] INFO  com.sql.jdbc.service.ShoppingCartService - Видалено всіх продуктів з корзини користувача id:1
+16-02-2024 18:24:54 [main] INFO  com.sql.jdbc.service.OrderService - Користувач купив продукти з корзини id:2
+16-02-2024 18:24:54 [main] INFO  com.sql.jdbc.service.ShoppingCartService - Видалено всіх продуктів з корзини користувача id:2
+16-02-2024 18:25:03 [main] INFO  com.sql.jdbc.service.OrderService - Отримано список всіх замовлень користувача id:1
+16-02-2024 18:25:12 [main] INFO  com.sql.jdbc.service.OrderService - Отримано список всіх замовлень з бази даних

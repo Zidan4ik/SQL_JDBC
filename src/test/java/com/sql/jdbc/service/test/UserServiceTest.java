@@ -1,13 +1,14 @@
-package com.sql.jdbc.service;
+package com.sql.jdbc.service.test;
 
 import com.sql.jdbc.entity.User;
+import com.sql.jdbc.service.UserService;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-class UserServiceTest {
+public class UserServiceTest {
     private UserService userService;
 
     @BeforeEach
@@ -16,7 +17,7 @@ class UserServiceTest {
     }
 
     @Test
-    void add() {
+    public void add() {
         User user = new User(35, "Grym", "Fench", "STR");
 
         userService.add(user);
@@ -28,11 +29,10 @@ class UserServiceTest {
         Assert.assertEquals(user.getCity(), userFromDB.getCity());
 
         System.out.println("перевірка методу save до database пройшла успішно");
-        userService.delete(user.getId());
     }
 
     @Test
-    void getAll() {
+    public void getAll() {
         List<User> users = userService.getAll();
 
         Assert.assertNotNull(users);
@@ -40,7 +40,7 @@ class UserServiceTest {
     }
 
     @Test
-    void getById() {
+    public void getById() {
         int id = 1;
         User user = userService.getById(id);
 
@@ -55,7 +55,7 @@ class UserServiceTest {
     }
 
     @Test
-    void update() {
+    public void update() {
         User userForUpdate = new User("TestName","TestSurname","TestCity");
         userService.update(userForUpdate,34);
         User userFromDB = userService.getById(34);
@@ -69,7 +69,7 @@ class UserServiceTest {
     }
 
     @Test
-    void delete() {
+    public void delete() {
         int id = 10;
         User user = userService.getById(id);
         Assert.assertNotNull("користувача не існує під цим id",user);

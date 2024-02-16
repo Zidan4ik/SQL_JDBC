@@ -1,6 +1,7 @@
-package com.sql.jdbc.service;
+package com.sql.jdbc.service.test;
 
 import com.sql.jdbc.entity.Product;
+import com.sql.jdbc.service.ProductService;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

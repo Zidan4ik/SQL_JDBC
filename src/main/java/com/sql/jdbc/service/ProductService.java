@@ -18,29 +18,32 @@ public class ProductService extends ConnectDB implements ProductDAO {
     }
     @Override
     public void add(Product product) {
+        logMessage("Продукт з id:"+product.getId()+" було добавлено в список купного");
         PreparedStatement preparedStatement = null;
-        String queryUser = "INSERT INTO products (name,price)" +
-                "VALUES(?,?)";
+        String queryUser = "INSERT INTO products (id,name,price)" +
+                "VALUES(?,?,?)";
         try {
             preparedStatement = connection.prepareStatement(queryUser);
-            preparedStatement.setString(1,product.getName());
-            preparedStatement.setInt(2,product.getPrice());
+            preparedStatement.setInt(1,product.getId());
+            preparedStatement.setString(2,product.getName());
+            preparedStatement.setInt(3,product.getPrice());
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logMessage(e.getMessage());
         } finally {
             try {
                 if (!preparedStatement.isClosed())
                     preparedStatement.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logMessage(e.getMessage());
             }
         }
     }
 
     @Override
     public List<Product> getAll() {
+        logMessage("Отримано список продуктів з база даних");
         Statement statement = null;
         String query = "SELECT * FROM products";
         List<Product> products = new ArrayList<>();
@@ -57,28 +60,26 @@ public class ProductService extends ConnectDB implements ProductDAO {
                 products.add(product);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logMessage(e.getMessage());
         } finally {
             try {
                 if (!statement.isClosed())
                     statement.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logMessage(e.getMessage());
             }
         }
-
-        for (Product p : products) {
-            System.out.println(p);
-        }
+        showList(products);
         return products;
     }
 
     @Override
     public Product getById(int id) {
+        logMessage("Отримано продукт по id:"+id);
         PreparedStatement preparedStatement = null;
 
         String query = "SELECT * FROM products WHERE id=?";
-        Product product = new Product();
+        Product product = null;
 
         try {
             preparedStatement = connection.prepareStatement(query);
@@ -86,18 +87,19 @@ public class ProductService extends ConnectDB implements ProductDAO {
 
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
+                product = new Product();
                 product.setId(resultSet.getInt("id"));
                 product.setName(resultSet.getString("name"));
                 product.setPrice(resultSet.getInt("price"));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logMessage(e.getMessage());
         } finally {
             try {
                 if (!preparedStatement.isClosed())
                     preparedStatement.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logMessage(e.getMessage());
             }
         }
         return product;
@@ -105,6 +107,7 @@ public class ProductService extends ConnectDB implements ProductDAO {
 
     @Override
     public void update(Product product, int id) {
+        logMessage("Змінено дані про продукт під id:"+id);
         PreparedStatement preparedStatement = null;
 
         String query = "UPDATE products SET name=?, price=? WHERE id=?";
@@ -119,19 +122,20 @@ public class ProductService extends ConnectDB implements ProductDAO {
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logMessage(e.getMessage());
         } finally {
             try {
                 if (!preparedStatement.isClosed())
                     preparedStatement.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logMessage(e.getMessage());
             }
         }
     }
 
     @Override
     public void delete(int id) {
+        logMessage("Видалено продукт під id:"+id);
         PreparedStatement preparedStatement = null;
 
         String query = "DELETE FROM products WHERE id=?";
@@ -143,13 +147,13 @@ public class ProductService extends ConnectDB implements ProductDAO {
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logMessage(e.getMessage());
         } finally {
             try {
                 if (!preparedStatement.isClosed())
                     preparedStatement.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logMessage(e.getMessage());
             }
         }
     }

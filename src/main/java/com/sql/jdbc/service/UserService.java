@@ -17,6 +17,7 @@ public class UserService extends ConnectDB implements UserDAO {
     }
     @Override
     public void add(User user) {
+        logMessage("Користувач з id:"+user.getId()+" був добавлений в базу даних");
         PreparedStatement preparedStatement = null;
         String queryUser = "INSERT INTO users (id,name,surname,city)" +
                 "VALUES(?,?,?,?)";
@@ -29,13 +30,13 @@ public class UserService extends ConnectDB implements UserDAO {
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logMessage(e.getMessage());
         } finally {
             try {
                 if (!preparedStatement.isClosed())
                     preparedStatement.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logMessage(e.getMessage());
             }
         }
     }
@@ -43,6 +44,7 @@ public class UserService extends ConnectDB implements UserDAO {
 
     @Override
     public List<User> getAll() {
+        logMessage("Отримано всіх користувачів з бази даних");
         Statement statement = null;
         String query = "SELECT * FROM users";
         List<User> users = new ArrayList<>();
@@ -59,29 +61,28 @@ public class UserService extends ConnectDB implements UserDAO {
 
                 users.add(user);
             }
+
         } catch (SQLException e) {
-            e.printStackTrace();
+            logMessage(e.getMessage());
         } finally {
             try {
                 if (!statement.isClosed())
                     statement.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logMessage(e.getMessage());
             }
         }
-
-        for (User u : users) {
-            System.out.println(u);
-        }
+        showList(users);
         return users;
     }
 
     @Override
     public User getById(int id) {
+        logMessage("Отримано користувача з бази даних id:"+id);
         PreparedStatement preparedStatement = null;
 
         String query = "SELECT * FROM users WHERE id=?";
-        User user = new User();
+        User user = null;
 
         try {
             preparedStatement = connection.prepareStatement(query);
@@ -89,19 +90,20 @@ public class UserService extends ConnectDB implements UserDAO {
 
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
+                user = new User();
                 user.setId(resultSet.getInt("id"));
                 user.setName(resultSet.getString("name"));
                 user.setSurname(resultSet.getString("surname"));
                 user.setCity(resultSet.getString("city"));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logMessage(e.getMessage());
         } finally {
             try {
                 if (!preparedStatement.isClosed())
                     preparedStatement.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logMessage(e.getMessage());
             }
         }
         return user;
@@ -109,6 +111,7 @@ public class UserService extends ConnectDB implements UserDAO {
 
     @Override
     public void update(User user, int id) {
+        logMessage("Оновлено дані про користувача в базі даних id:"+id);
         PreparedStatement preparedStatement = null;
 
         String query = "UPDATE users SET name=?, surname=?, city=? WHERE id=?";
@@ -124,19 +127,20 @@ public class UserService extends ConnectDB implements UserDAO {
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logMessage(e.getMessage());
         } finally {
             try {
                 if (!preparedStatement.isClosed())
                     preparedStatement.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logMessage(e.getMessage());
             }
         }
     }
 
     @Override
     public void delete(int id) {
+        logMessage("Видалено користувача з бази даних id:"+id);
         PreparedStatement preparedStatement = null;
 
         String query = "DELETE FROM users WHERE id=?";
@@ -148,13 +152,13 @@ public class UserService extends ConnectDB implements UserDAO {
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logMessage(e.getMessage());
         } finally {
             try {
                 if (!preparedStatement.isClosed())
                     preparedStatement.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logMessage(e.getMessage());
             }
         }
     }
